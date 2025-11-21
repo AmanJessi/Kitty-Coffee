@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kitty Coffee</title>
+
+    <!-- Bootstrap + Fuentes + Iconos -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/tema-oscuro.css" />
+
+    <style>
+      body {
+        background: url("img/gatito_fondo.jpg") center/cover no-repeat fixed;
+        min-height: 100vh;
+        font-family: "Poppins", sans-serif;
+      }
+
+      /* Overlay blanco suave como en adopciones */
+      .content-overlay {
+        background: rgba(255, 255, 255, 0.96);
+        min-height: 100vh;
+        padding-top: 120px;
+      }
+
+      [data-bs-theme="dark"] .content-overlay {
+        background: rgba(30, 20, 40, 0.96);
+      }
+
+      /* TU NAVBAR ORIGINAL (la conservamos 100%) */
+      .navbar {
+        background: rgba(255, 255, 255, 0.92) !important;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      [data-bs-theme="dark"] .navbar {
+        background: rgba(30, 20, 40, 0.95) !important;
+      }
+
+      .navbar-brand {
+        font-family: "Fredoka One", cursive;
+        font-size: 1.9rem;
+        color: #d81b60 !important;
+      }
+
+      .nav-link {
+        color: #0f766e !important;
+        font-weight: 600;
+      }
+
+      [data-bs-theme="dark"] .nav-link {
+        color: #ffb3c6 !important;
+      }
+      .nav-link:hover {
+        color: #ff8f8f !important;
+      }
+
+      h1 {
+        font-family: "Fredoka One", cursive;
+        font-size: 4.8rem;
+        color: #6b3e26;
+        text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      [data-bs-theme="dark"] h1 {
+        color: #ffb3c6;
+        text-shadow: 0 0 25px rgba(255, 107, 157, 0.8);
+      }
+
+      .subtitle {
+        font-size: 1.6rem;
+        color: #5d4037;
+        font-weight: 500;
+      }
+
+      [data-bs-theme="dark"] .subtitle {
+        color: #ffccdd;
+      }
+
+      .pusheen-img {
+        width: 380px;
+        border-radius: 50%;
+        border: 14px solid #ff99bb;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+        transition: all 0.5s ease;
+      }
+
+      .pusheen-img:hover {
+        transform: scale(1.12) rotate(10deg);
+        box-shadow: 0 35px 80px rgba(255, 107, 157, 0.7);
+      }
+
+      /* BOTONES DEL MENÚ (estilo adopciones) */
+      .btn-menu {
+        background: linear-gradient(135deg, #ff6b9d, #f06292);
+        color: white;
+        padding: 18px 55px;
+        border-radius: 50px;
+        font-weight: bold;
+        font-size: 1.4rem;
+        box-shadow: 0 12px 35px rgba(255, 107, 157, 0.5);
+        transition: all 0.4s;
+        margin: 15px 0;
+      }
+
+      .btn-menu:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 25px 50px rgba(255, 107, 157, 0.8);
+      }
+
+      /* BARRA LATERAL REDES */
+      .social-sidebar {
+        position: fixed;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        z-index: 9999;
+      }
+
+      .social-btn {
+        width: 62px;
+        height: 62px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.9rem;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+        transition: all 0.4s ease;
+        transform: translateX(-110px);
+      }
+
+      .social-btn:hover {
+        transform: translateX(0) scale(1.3) !important;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      }
+
+      .facebook {
+        background: #1877f2;
+      }
+      .tiktok {
+        background: #000000;
+      }
+      .whatsapp {
+        background: #25d366;
+      }
+      .telegram {
+        background: #0088cc;
+      }
+      .youtube {
+        background: #ff0000;
+      }
+
+      .social-btn:nth-child(1) {
+        animation: slideIn 0.8s forwards 0.1s;
+      }
+      .social-btn:nth-child(2) {
+        animation: slideIn 0.8s forwards 0.2s;
+      }
+      .social-btn:nth-child(3) {
+        animation: slideIn 0.8s forwards 0.3s;
+      }
+      .social-btn:nth-child(4) {
+        animation: slideIn 0.8s forwards 0.4s;
+      }
+      .social-btn:nth-child(5) {
+        animation: slideIn 0.8s forwards 0.5s;
+      }
+
+      @keyframes slideIn {
+        to {
+          transform: translateX(0);
+        }
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 3.5rem;
+        }
+        .pusheen-img {
+          width: 280px;
+        }
+        .btn-menu {
+          font-size: 1.2rem;
+          padding: 15px 40px;
+        }
+      }
+
+      /* QUITAR SUBRAYADO DE REDES SOCIALES */
+      .social-sidebar a,
+      .social-btn {
+        text-decoration: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- TU NAVBAR ORIGINAL (100% conservada) -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Kitty Coffee</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navMenu"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ms-auto gap-3">
+            <li class="nav-item">
+              <a class="nav-link" href="sobrenosotros.html">Sobre Nosotros</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="menu.html">Menú</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="adopciones.html">Adopta</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="juego.html">Juego</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contacto.html">Contacto</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Botón Modo Oscuro (tu estilo) -->
+    <div class="position-fixed top-0 end-0 p-4" style="z-index: 9999">
+      <button
+        id="btnTema"
+        class="btn btn-lg rounded-circle shadow-lg"
+        style="
+          width: 70px;
+          height: 70px;
+          background: rgba(255, 255, 255, 0.95);
+          border: 5px solid #ff6b9d;
+        "
+      >
+        <i class="fas fa-moon fa-2x" style="color: #d81b60"></i>
+      </button>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="content-overlay">
+      <div class="container text-center">
+        <h1 class="my-5">Bienvenidos a Kitty Coffee</h1>
+        <p class="subtitle mb-5">
+          Un rinconcito donde el aroma del café se mezcla con ronroneos tiernos
+        </p>
+
+        <div class="my-5">
+          <img
+            src="img/gatito_cafe.gif"
+            alt="Gatito con café"
+            class="pusheen-img"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- BARRA DE REDES SOCIALES -->
+    <div class="social-sidebar">
+      <a
+        href="https://facebook.com/kittycoffee"
+        target="_blank"
+        class="social-btn facebook"
+        title="Facebook"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+      <a
+        href="https://tiktok.com/@kittycoffee"
+        target="_blank"
+        class="social-btn tiktok"
+        title="TikTok"
+        ><i class="fab fa-tiktok"></i
+      ></a>
+      <a
+        href="https://wa.me/+59170000000"
+        target="_blank"
+        class="social-btn whatsapp"
+        title="WhatsApp"
+        ><i class="fab fa-whatsapp"></i
+      ></a>
+      <a
+        href="https://t.me/+59170000000"
+        target="_blank"
+        class="social-btn telegram"
+        title="Telegram"
+        ><i class="fab fa-telegram-plane"></i
+      ></a>
+      <a
+        href="https://youtube.com/@kittycoffee"
+        target="_blank"
+        class="social-btn youtube"
+        title="YouTube"
+        ><i class="fab fa-youtube"></i
+      ></a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/tema-oscuro.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Cambia tu número aquí
+      const miNumero = "+59170000000";
+      document
+        .querySelectorAll(".whatsapp")
+        .forEach((a) => (a.href = `https://wa.me/${miNumero}`));
+      document
+        .querySelectorAll(".telegram")
+        .forEach((a) => (a.href = `https://t.me/${miNumero.replace("+", "")}`));
+    </script>
+  </body>
+</html>
