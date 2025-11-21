@@ -1,0 +1,77 @@
+/* css/tema-oscuro.css → Versión FINAL y PRECIOSA */
+body[data-bs-theme="dark"] {
+    background: linear-gradient(135deg, #1a0f12 0%, #2d1b24 100%) !important;
+    color: #f0d4e0 !important;
+}
+
+/* Overlay elegante */
+body[data-bs-theme="dark"] .overlay,
+body[data-bs-theme="dark"] .contenedor,
+body[data-bs-theme="dark"] .form-container {
+    background: rgba(25, 15, 22, 0.94) !important;
+}
+
+/* Títulos */
+body[data-bs-theme="dark"] h1,
+body[data-bs-theme="dark"] h2,
+body[data-bs-theme="dark"] h3,
+body[data-bs-theme="dark"] .card-title {
+    color: #ffb3c6 !important;
+    text-shadow: 0 0 10px rgba(255, 182, 193, 0.4);
+}
+
+/* Texto normal */
+body[data-bs-theme="dark"] p,
+body[data-bs-theme="dark"] .card-text {
+    color: #e8c7d4 !important;
+}
+
+/* Botones rosados → versión nocturna suave */
+body[data-bs-theme="dark"] .btn-custom,
+body[data-bs-theme="dark"] .btn,
+body[data-bs-theme="dark"] .back-btn,
+body[data-bs-theme="dark"] a[style*="background"] {
+    background: linear-gradient(45deg, #d81b60, #ec407a) !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(216, 27, 96, 0.5) !important;
+}
+body[data-bs-theme="dark"] .btn-custom:hover,
+body[data-bs-theme="dark"] .btn:hover {
+    background: linear-gradient(45deg, #ec407a, #f06292) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Tarjetas del menú y adopciones */
+body[data-bs-theme="dark"] .card,
+body[data-bs-theme="dark"] .gato {
+    background: #2d1b24 !important;
+    border: 1px solid #6d3b50 !important;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4) !important;
+}
+
+/* Tabs del menú */
+body[data-bs-theme="dark"] .nav-tabs .nav-link {
+    background: #4a1b2e !important;
+    color: #ffb3c6 !important;
+}
+body[data-bs-theme="dark"] .nav-tabs .nav-link.active {
+    background: #c2185b !important;
+    color: white !important;
+}
+
+/* Footer */
+body[data-bs-theme="dark"] footer {
+    background: linear-gradient(to top, #1a0c10, #2d1b24) !important;
+    color: #ff99bb !important;
+    border-top: 1px solid #6d3b50;
+}
+
+/* Botón del tema */
+body[data-bs-theme="dark"] #btnTema {
+    background: rgba(40, 20, 35, 0.95) !important;
+    border: 2px solid #ff99bb;
+}
+body[data-bs-theme="dark"] #btnTema i {
+    color: #ffb3c6 !important;
+}

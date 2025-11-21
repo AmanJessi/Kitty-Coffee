@@ -1,0 +1,36 @@
+body{
+    height: 100vh;
+    background:linear-gradient(#fff,#ffb6c1,#f08dda,#ff69b4); 
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+h2{
+    text-align: center;
+}
+form{
+    background-color:#f28b82;
+    opacity: 0.6;
+    padding: 2%;
+    line-height: 30px;
+    width: 25%;
+    align-items: center;
+    border-radius: 10px;
+}
+input{
+    width: 100%;
+    border-radius: 5px;
+}
+input[type="submit"]{
+    width: 30%;
+    margin-top: 8px;
+    margin-left: 35%;
+    background-color: rgb(153, 67, 150);
+    color: antiquewhite;
+    border-radius: 9px 0px 9px 0px;
+}

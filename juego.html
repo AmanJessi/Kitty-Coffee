@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juegos y Premios - Kitty Coffee</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tema-oscuro.css">
+
+  <style>
+    body { 
+      background: linear-gradient(135deg, #fff0f8, #ffeef6); 
+      font-family: 'Poppins', sans-serif; 
+      min-height: 100vh; 
+      margin: 0;
+      padding-top: 80px;
+    }
+    h1, h2, h3 { font-family: 'Fredoka One', cursive; color: #d81b60; }
+    .puntos-box {
+      background: linear-gradient(135deg, #ff6b9d, #f06292);
+      color: white; padding: 15px 35px; border-radius: 50px;
+      font-size: 1.9rem; font-weight: bold; box-shadow: 0 10px 30px rgba(255,107,157,0.5);
+    }
+    .tab-btn {
+      background: white; border: 3px solid #ff99bb; color: #d81b60;
+      padding: 12px 25px; border-radius: 50px; font-weight: bold;
+      margin: 0 8px;
+    }
+    .tab-btn.active { background: #ff99bb; color: white; }
+    .juego-card { background: white; border-radius: 25px; padding: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+    .cell { background: #fff; border-radius: 20px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s; }
+    .cell:hover { transform: scale(1.08); }
+    .memory-card { height: 100px; perspective: 1000px; }
+    .memory-card.flip .inner { transform: rotateY(180deg); }
+    .inner { width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; position: relative; }
+    .front, .back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 15px; display: flex; align-items: center; justify-content: center; }
+    .front { background: #ff99bb; }
+    .back { transform: rotateY(180deg); background: white; }
+    .ruleta {
+      width: 280px; height: 280px; border-radius: 50%; background: conic-gradient(#ff6b9d 0% 25%, #ffb6d9 25% 50%, #ff99bb 50% 75%, #f8c8dc 75% 100%);
+      position: relative; margin: 30px auto; box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+    .flecha { width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 50px solid #d81b60; position: absolute; top: -45px; left: 50%; transform: translateX(-50%); z-index: 10; }
+  </style>
+</head>
+<body>
+
+  <!-- Botón Volver -->
+  <a href="principal.html" class="position-fixed top-0 start-0 m-4 btn rounded-pill shadow-lg d-flex align-items-center gap-2 px-4 py-3"
+     style="background: linear-gradient(135deg, #ff6b9d, #f06292); color: white; font-weight: bold; z-index: 9999; text-decoration:none;">
+    <i class="fas fa-paw"></i> Volver
+  </a>
+
+  <!-- Modo Oscuro -->
+  <div class="position-fixed top-0 end-0 p-4" style="z-index:9999;">
+    <button id="btnTema" class="btn btn-lg rounded-circle shadow-lg" style="width:68px;height:68px;background:rgba(255,255,255,0.95);border:4px solid #ff99bb;">
+      <i class="fas fa-moon fa-2x" style="color:#d81b60;"></i>
+    </button>
+  </div>
+
+  <div class="container py-4">
+    <h1 class="text-center mb-3">Juegos de Kitty Coffee</h1>
+    
+    <!-- PUNTOS -->
+    <div class="text-center mb-4">
+      <div class="puntos-box d-inline-block">
+        <i class="fas fa-coins"></i> <span id="puntos">0</span> puntos
+      </div>
+    </div>
+
+    <!-- Pestañas de juegos -->
+    <div class="text-center mb-4">
+      <button class="tab-btn active" onclick="mostrarJuego(1)">Encuentra al Gatito</button>
+      <button class="tab-btn" onclick="mostrarJuego(2)">Memoria Gatuna</button>
+      <button class="tab-btn" onclick="mostrarJuego(3)">Ruleta del Día</button>
+    </div>
+
+    <!-- JUEGO 1: Encuentra al Gatito -->
+    <div class="juego-card text-center" id="juego1">
+      <h3>¡Encuentra al Gatito Escondido!</h3>
+      <p class="text-danger">3 intentos por mes • +2 puntos si ganas</p>
+      <div id="board1" class="d-grid" style="grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 500px; margin: 30px auto;"></div>
+      <p id="msg1" class="fs-5 mt-3"></p>
+    </div>
+
+    <!-- JUEGO 2: Memoria -->
+    <div class="juego-card text-center d-none" id="juego2">
+      <h3>Memoria Gatuna</h3>
+      <p>Encuentra todas las parejas • +3 puntos al completar</p>
+      <div id="memoryBoard" class="d-grid" style="grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 500px; margin: 30px auto;"></div>
+      <p id="msg2" class="fs-5 mt-3"></p>
+    </div>
+
+    <!-- JUEGO 3: Ruleta -->
+    <div class="juego-card text-center d-none" id="juego3">
+      <h3>Ruleta del Día</h3>
+      <p class="text-success">1 giro gratis por día</p>
+      <div class="flecha"></div>
+      <div class="ruleta" id="wheel"></div>
+      <button class="btn btn-lg mt-3" style="background:#ff6b9d;color:white;" onclick="girarRuleta()" id="btnGirar">¡Girar!</button>
+      <p id="msg3" class="fs-4 mt-4"></p>
+    </div>
+
+    <!-- Canjear -->
+    <div class="text-center mt-5 p-4 bg-white rounded shadow">
+      <h3>Canjea tus puntos</h3>
+      <p>100 puntos = Café gratis • 60 puntos = 20% off • 30 puntos = Postre</p>
+      <button class="btn btn-lg" style="background:#ff6b9d;color:white;" onclick="canjear()">Canjear Premio</button>
+    </div>
+  </div>
+
+  <!-- Sistema de puntos -->
+  <script>
+    // Actualizar puntos
+    function actualizarPuntos() {
+      const p = localStorage.getItem("kitty_puntos") || "0";
+      document.getElementById("puntos").textContent = p;
+    }
+    function sumarPuntos(n) {
+      let p = parseInt(localStorage.getItem("kitty_puntos") || "0") + n;
+      localStorage.setItem("kitty_puntos", p);
+      actualizarPuntos();
+    }
+    actualizarPuntos();
+
+    // Pestañas
+    function mostrarJuego(n) {
+      document.querySelectorAll(".juego-card").forEach(c => c.classList.add("d-none"));
+      document.getElementById("juego" + n).classList.remove("d-none");
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      event.target.classList.add("active");
+      if (n === 1) iniciarJuego1();
+      if (n === 2) iniciarMemoria();
+      if (n === 3) verificarRuleta();
+    }
+
+    // === JUEGO 1: Encuentra al Gatito ===
+    let intentosMes = parseInt(localStorage.getItem("intentos_mes") || "0");
+    const hoy = new Date().getFullYear() + "-" + (new Date().getMonth() + 1);
+    if (localStorage.getItem("mes_actual") !== hoy) {
+      intentosMes = 0;
+      localStorage.setItem("intentos_mes", "0");
+      localStorage.setItem("mes_actual", hoy);
+    }
+
+    function iniciarJuego1() {
+      const board = document.getElementById("board1");
+      const msg = document.getElementById("msg1");
+      board.innerHTML = "";
+      if (intentosMes >= 3) {
+        msg.innerHTML = "<span style='color:#d81b60;'>Ya usaste tus 3 intentos este mes</span>";
+        return;
+      }
+      const gato = Math.floor(Math.random() * 12);
+      for (let i = 0; i < 12; i++) {
+        const celda = document.createElement("div");
+        celda.className = "cell p-4";
+        celda.innerHTML = "<img src='img/cafe.jpg' width='60' class='img-fluid'>";
+        celda.onclick = () => {
+          if (celda.dataset.clic) return;
+          celda.dataset.clic = "1";
+          intentosMes++;
+          localStorage.setItem("intentos_mes", intentosMes);
+          if (i === gato) {
+            celda.innerHTML = "<img src='img/gatito.jpg' width='70'>";
+            msg.innerHTML = "¡LO ENCONTRASTE! +2 puntos";
+            sumarPuntos(2);
+          }
+          if (intentosMes >= 3) setTimeout(() => msg.innerHTML += "<br>Límite alcanzado este mes", 1500);
+        };
+        board.appendChild(celda);
+      }
+    }
+
+    // === JUEGO 2: Memoria ===
+    const gatos = ["gato1.png","gato2.png","gato3.png","gato4.png","gato5.png","gato6.png"];
+    function iniciarMemoria() {
+      const board = document.getElementById("memoryBoard");
+      board.innerHTML = "";
+      const pares = [...gatos, ...gatos].sort(() => Math.random() - 0.5);
+      let seleccionadas = [];
+      let aciertos = 0;
+      pares.forEach((img, i) => {
+        const card = document.createElement("div");
+        card.className = "memory-card";
+        card.innerHTML = `
+          <div class="inner">
+            <div class="front"><i class="fas fa-cat fa-3x" style="color:#ff99bb;"></i></div>
+            <div class="back"><img src="img/${img}" width="70"></div>
+          </div>`;
+        card.onclick = () => {
+          if (card.classList.contains("flip") || seleccionadas.length === 2) return;
+          card.classList.add("flip");
+          seleccionadas.push({card, img});
+          if (seleccionadas.length === 2) {
+            setTimeout(() => {
+              if (seleccionadas[0].img === seleccionadas[1].img) {
+                aciertos++;
+                if (aciertos === 6) {
+                  document.getElementById("msg2").innerHTML = "¡COMPLETADO! +3 puntos";
+                  sumarPuntos(3);
+                }
+              } else {
+                seleccionadas.forEach(s => s.card.classList.remove("flip"));
+              }
+              seleccionadas = [];
+            }, 800);
+          }
+        };
+        board.appendChild(card);
+      });
+    }
+
+    // === JUEGO 3: Ruleta ===
+    function verificarRuleta() {
+      const hoyStr = new Date().toDateString();
+      if (localStorage.getItem("ultima_ruleta") === hoyStr) {
+        document.getElementById("btnGirar").disabled = true;
+        document.getElementById("btnGirar").textContent = "Ya giraste hoy";
+      }
+    }
+    function girarRuleta() {
+      const wheel = document.getElementById("wheel");
+      const grados = Math.floor(Math.random() * 360) + 720;
+      wheel.style.transform = `rotate(${grados}deg)`;
+      setTimeout(() => {
+        const premio = [1,2,3,5,10][Math.floor(Math.random()*5)];
+        document.getElementById("msg3").innerHTML = `¡+${premio} puntos!`;
+        sumarPuntos(premio);
+        localStorage.setItem("ultima_ruleta", new Date().toDateString());
+        document.getElementById("btnGirar").disabled = true;
+        document.getElementById("btnGirar").textContent = "Ya giraste hoy";
+      }, 3000);
+    }
+
+    // Canjear
+    function canjear() {
+      const p = parseInt(localStorage.getItem("kitty_puntos") || "0");
+      if (p >= 100) alert("CÓDIGO: KITTY100 → Café GRATIS");
+      else if (p >= 60) alert("CÓDIGO: KITTY60 → 20% descuento");
+      else if (p >= 30) alert("CÓDIGO: KITTY30 → Postre gratis");
+      else alert("Te faltan puntos... ¡sigue jugando!");
+    }
+
+    // Iniciar el primero
+    iniciarJuego1();
+  </script>
+
+  <script src="js/tema-oscuro.js"></script>
+</body>
+</html>

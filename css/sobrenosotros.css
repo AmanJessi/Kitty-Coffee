@@ -1,0 +1,36 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('gatito_fondo.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #4b2e2b;
+  }
+  a:hover {
+    background-color: #f28b82;
+    transform: scale(1.1);
+  }
+  .overlay {
+    background-color: rgba(255,234,225,0.85);
+    min-height: 100vh;
+    padding: 50px 20px;
+  }
+  h1, h2, h3 {
+    font-family: 'Fredoka One', cursive;
+    color: #6b3e26;
+    text-align: center;
+  }
+  img {
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+  section {
+    margin-top: 30px;
+  }
+  footer {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(247,217,208,0.9);
+  }
+  footer p { margin: 5px; font-size: 0.9rem; }
+  
